@@ -52,6 +52,11 @@ public class AppleIdentityProvider extends OIDCIdentityProvider implements Socia
         if (userJson != null) {
             try {
                 User user = JsonSerialization.readValue(userJson, User.class);
+                logger.infof("Apple user email: %s", user.email);
+                if (user.name == null) {
+                    logger.info("Apple Name not in JSON");
+                    logger.info(userJson);
+                }
                 context.setEmail(user.email);
                 context.setFirstName(user.name.firstName);
                 context.setLastName(user.name.lastName);
